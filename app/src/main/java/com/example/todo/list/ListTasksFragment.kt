@@ -1,10 +1,12 @@
 package com.example.todo.list
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.todo.UpdateActivity
 import com.example.todo.base.BaseFragment
 import com.example.todo.database.MyDataBase
 import com.example.todo.database.model.Task
@@ -14,14 +16,14 @@ import java.util.*
 
 
 class ListTasksFragment : BaseFragment() {
-    lateinit var viewBinding: ListTasksFragmentBinding
+    lateinit var fragmentListTasksBinding: ListTasksFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewBinding = ListTasksFragmentBinding.inflate(layoutInflater,container,false);
-        return viewBinding.root;
+        fragmentListTasksBinding = ListTasksFragmentBinding.inflate(layoutInflater,container,false);
+        return fragmentListTasksBinding.root
     }
 
     lateinit var adapter :TasksListAdapter
@@ -36,16 +38,36 @@ class ListTasksFragment : BaseFragment() {
                 deleteTask(item)
             }
         }
-        viewBinding.todoRecycler.adapter = adapter
-        viewBinding.calendarView.setOnDateChangedListener { widget, selectedDate, selected ->
+
+        adapter.onItemClickedToUpdate=object  : TasksListAdapter.OnItemClickedToUpdate{
+            override fun onClickToUpdate(task: Task) {
+                val inttent: Intent= Intent(requireContext(),UpdateActivity::class.java)
+                 inttent.putExtra("todo",task)
+                startActivity(inttent)
+            }
+
+        }
+        fragmentListTasksBinding.todoRecycler.adapter = adapter
+        fragmentListTasksBinding.calendarView.setOnDateChangedListener { widget, selectedDate, selected ->
             // when user clicks on date
             currentDate.set(Calendar.MONTH,selectedDate.month-1)
             currentDate.set(Calendar.DAY_OF_MONTH,selectedDate.day)
             currentDate.set(Calendar.YEAR,selectedDate.year)
             reloadTasks()
         }
-        viewBinding.calendarView.setDateSelected(CalendarDay.today(),true)
+        fragmentListTasksBinding.calendarView.setDateSelected(CalendarDay.today(),true)
     }
+
+    private fun makeTaskDane(task: Task){
+        task.isDone=true
+        MyDataBase.getInstance(requireContext()).tasksDao().updateTask(task)
+        refreshTasks()
+    }
+
+    private fun refreshTasks() {
+        adapter.reloadTasks(MyDataBase.getInstance(requireContext()).tasksDao().selectAllTasks())
+        adapter.notifyDataSetChanged()}
+
     val currentDate = Calendar.getInstance();
     init {
         currentDate.set(Calendar.HOUR,0)

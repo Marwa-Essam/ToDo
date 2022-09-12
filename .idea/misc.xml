@@ -6,11 +6,13 @@
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/drawable-mdpi/rounded_primary.xml" value="0.1" />
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/activity_add_task_bottomsheet.xml" value="0.1" />
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/activity_update.xml" value="0.1" />
+        <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/add_task_bottomsheet.xml" value="0.1" />
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/content_home.xml" value="0.1" />
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/item_task.xml" value="0.10009057971014493" />
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/list_tasks_fragment.xml" value="0.1" />
         <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/screen_splash.xml" value="0.1" />
-        <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/settings_fragment.xml" value="0.11865942028985507" />
+        <entry key="..\:/All projects/Android projects/ToDo/app/src/main/res/layout/settings_fragment.xml" value="0.1" />
       </map>
     </option>
   </component>
