@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.room.Update
 import com.example.todo.UpdateActivity
 import com.example.todo.base.BaseFragment
 import com.example.todo.database.MyDataBase
@@ -30,8 +31,8 @@ class ListTasksFragment : BaseFragment() {
     lateinit var tasksList :List<Task>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tasksList = MyDataBase.getInstance(requireContext()).tasksDao().selectAllTasks()
-        //selectTasksByDate(currentDate.timeInMillis)
+        tasksList = MyDataBase.getInstance(requireContext()).tasksDao()
+            .selectTasksByDate(currentDate.timeInMillis)
         adapter = TasksListAdapter(tasksList)
         adapter.onDeleteClickListener = object :TasksListAdapter.OnItemClickListener{
             override fun onItemClick(pos: Int, item: Task) {
@@ -41,9 +42,10 @@ class ListTasksFragment : BaseFragment() {
 
         adapter.onItemClickedToUpdate=object  : TasksListAdapter.OnItemClickedToUpdate{
             override fun onClickToUpdate(task: Task) {
-                val inttent: Intent= Intent(requireContext(),UpdateActivity::class.java)
-                 inttent.putExtra("todo",task)
-                startActivity(inttent)
+                showMessage("what do you want to do","update",DialogInterface.OnClickListener {
+                    dialogInterface,  i -> updateTask(task) },"Make Done",DialogInterface.OnClickListener
+                   {dialogIterface, i -> makeTaskDane(task) })
+
             }
 
         }
@@ -58,15 +60,18 @@ class ListTasksFragment : BaseFragment() {
         fragmentListTasksBinding.calendarView.setDateSelected(CalendarDay.today(),true)
     }
 
+    private fun updateTask(task: Task) {
+        val inttent: Intent= Intent(requireContext(),UpdateActivity::class.java)
+        inttent.putExtra("todo",task)
+        startActivity(inttent)
+
+    }
+
     private fun makeTaskDane(task: Task){
         task.isDone=true
         MyDataBase.getInstance(requireContext()).tasksDao().updateTask(task)
-        refreshTasks()
+        reloadTasks()
     }
-
-    private fun refreshTasks() {
-        adapter.reloadTasks(MyDataBase.getInstance(requireContext()).tasksDao().selectAllTasks())
-        adapter.notifyDataSetChanged()}
 
     val currentDate = Calendar.getInstance();
     init {

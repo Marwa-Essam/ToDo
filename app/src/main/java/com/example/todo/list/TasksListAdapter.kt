@@ -14,7 +14,6 @@ import com.zerobranch.layout.SwipeLayout
 
 class TasksListAdapter (var items:List<Task>): RecyclerView.Adapter<TasksListAdapter.ViewHolder> (){
     var onItemClickedToUpdate:OnItemClickedToUpdate?=null
-    //var onItemClickedToChecked:OnItemClickedToChecked?=null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -23,26 +22,15 @@ class TasksListAdapter (var items:List<Task>): RecyclerView.Adapter<TasksListAda
                 parent,false))
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.viewBinding.title.text = items[position].title
         holder.viewBinding.description.text = items[position].desc
 
         if (items[position].isDone==true){
-            holder.viewBinding.verticalLine.setBackgroundColor(R.color.colorGreen)
-            holder.viewBinding.title.setTextColor(R.color.colorGreen)
-            holder.viewBinding.markDone.setBackgroundResource(R.drawable.icon_check)
+            holder.viewBinding.verticalLine.setBackgroundColor(Color.GREEN)
+            holder.viewBinding.title.setTextColor(Color.GREEN)
+            holder.viewBinding.markDone.setBackgroundColor(Color.GREEN)
         }
-       /* if (onItemClickedToChecked==true){
-            holder.viewBinding.markDone.setOnClickListener {
-                onItemClickedToChecked?.onClickToCheck(items[position])
-                holder.viewBinding.verticalLine.setBackgroundColor(R.color.colorGreen)
-                holder.viewBinding.title.setTextColor(R.color.colorGreen)
-                holder.viewBinding.markDone.setBackgroundResource(R.drawable.icon_check)
-            }
-        }*/
-
-
 
         if (onItemClickedToUpdate!=null){
             holder.viewBinding.title.setOnClickListener {
@@ -53,8 +41,7 @@ class TasksListAdapter (var items:List<Task>): RecyclerView.Adapter<TasksListAda
         holder.viewBinding.delete.setOnClickListener{
             onDeleteClickListener?.onItemClick(position,items[position])
         }
-        holder.viewBinding.swipeLayout
-            .setOnActionsListener(object : SwipeLayout.SwipeActionsListener{
+        holder.viewBinding.swipeLayout.setOnActionsListener(object : SwipeLayout.SwipeActionsListener{
                 override fun onClose() {
                 }
 
@@ -79,12 +66,10 @@ class TasksListAdapter (var items:List<Task>): RecyclerView.Adapter<TasksListAda
     override fun getItemCount(): Int = items.size
 
     class ViewHolder(val viewBinding:ItemTaskBinding): RecyclerView.ViewHolder(viewBinding.root)
+
 public  interface OnItemClickedToUpdate{
     fun onClickToUpdate(task: Task)
 }
 
-    /*public  interface OnItemClickedToChecked{
-        fun onClickToCheck(task: Task)
-}*/
 
 }
