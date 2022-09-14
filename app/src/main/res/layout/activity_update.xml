@@ -8,12 +8,7 @@
     android:background="@color/backGroundColor"
     tools:context=".UpdateActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizantalline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="111dp"/>
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/updatebar"
@@ -33,7 +28,7 @@
             android:layout_marginStart="50dp"
             android:text="Edit"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -73,7 +68,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add New Todo"
+                android:text="Update Task"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +106,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.cardview.widget.CardView>
 
